@@ -22,6 +22,7 @@ const StockAnalyzer = () => {
   const [buyPrice, setBuyPrice] = useState("");
   const [shares, setShares] = useState("");
   const [sellPrice, setSellPrice] = useState("");
+  const [sellPricePercent, setSellPricePercent] = useState("");
   const [mtfEnabled, setMtfEnabled] = useState(false);
   const [marginMultiplier, setMarginMultiplier] = useState("2.5");
   const [mtfTargetPrice, setMtfTargetPrice] = useState("");
@@ -149,7 +150,20 @@ const StockAnalyzer = () => {
                   step="0.01"
                   placeholder="e.g., 2500.00"
                   value={buyPrice}
-                  onChange={(e) => setBuyPrice(e.target.value)}
+                  onChange={(e) => {
+                    setBuyPrice(e.target.value);
+                    if (sellPricePercent) {
+                      // Recalculate Sell Price if % exists
+                      const bp = Number(e.target.value);
+                      const percent = Number(sellPricePercent);
+                      if (bp > 0 && percent) {
+                        const sp = bp * (1 + percent / 100);
+                        setSellPrice(sp.toFixed(2));
+                      } else {
+                        setSellPrice("");
+                      }
+                    }
+                  }}
                   className={errors.buyPrice ? "border-destructive" : ""}
                 />
                 {errors.buyPrice && (
@@ -180,12 +194,46 @@ const StockAnalyzer = () => {
                   step="0.01"
                   placeholder="e.g., 2800.00"
                   value={sellPrice}
-                  onChange={(e) => setSellPrice(e.target.value)}
+                  onChange={(e) => {
+                    const newSellPrice = e.target.value;
+                    setSellPrice(newSellPrice);
+
+                    const bp = Number(buyPrice);
+                    const sp = Number(newSellPrice);
+
+                    if (bp > 0 && sp > 0) {
+                      const percent = ((sp - bp) / bp) * 100;
+                      setSellPricePercent(percent.toFixed(2));
+                    } else {
+                      setSellPricePercent("");
+                    }
+                  }}
                   className={errors.sellPrice ? "border-destructive" : ""}
                 />
                 {errors.sellPrice && (
                   <p className="text-sm text-destructive">{errors.sellPrice}</p>
                 )}
+
+                <Label htmlFor="sellPricePercent" className="mt-2 block">
+                  Expected % Change
+                </Label>
+                <Input
+                  id="sellPricePercent"
+                  type="number"
+                  step="0.01"
+                  placeholder="e.g., 2.5"
+                  value={sellPricePercent}
+                  onChange={(e) => {
+                    const percent = e.target.value;
+                    setSellPricePercent(percent);
+
+                    const bp = Number(buyPrice);
+                    if (bp > 0 && percent !== "") {
+                      const newSP = bp * (1 + Number(percent) / 100);
+                      setSellPrice(newSP.toFixed(2));
+                    }
+                  }}
+                />
               </div>
             </div>
 
