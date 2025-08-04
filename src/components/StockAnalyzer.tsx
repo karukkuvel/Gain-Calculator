@@ -111,7 +111,7 @@ const StockAnalyzer = () => {
       const marginMult = Number(marginMultiplier);
       const mtfTarget = Number(mtfTargetPrice);
       const mtfBuyingPower = totalInvested * marginMult;
-      const requiredMargin = mtfBuyingPower / marginMult;
+      const requiredMargin = totalInvested;
       const mtfShares = mtfBuyingPower / bp;
       const mtfSellAmount = mtfShares * mtfTarget;
       const mtfProfitLoss = mtfSellAmount - mtfBuyingPower;
@@ -120,6 +120,7 @@ const StockAnalyzer = () => {
       const netProfit = mtfProfitLoss - interestCost;
       const mtfProfitLossPercentage = (netProfit / requiredMargin) * 100;
       const breakEvenPrice = bp + interestCost / mtfShares;
+
       analysisResult.mtfBuyingPower = mtfBuyingPower;
       analysisResult.requiredMargin = requiredMargin;
       analysisResult.mtfProfitLoss = netProfit;
@@ -142,9 +143,13 @@ const StockAnalyzer = () => {
 
   return (
     <div className="min-h-screen bg-background p-4 md:p-8">
-      <div className="max-w-4xl mx-auto space-y-6">
-        <Card className="p-6 bg-white/5 backdrop-blur border border-white/10">
-          <CardHeader><CardTitle>Stock Inputs</CardTitle></CardHeader>
+      <div className="max-w-4xl mx-auto space-y-8">
+        <Card className="shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-6 w-6" /> Stock Price Analyzer
+            </CardTitle>
+          </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-2">
             <div><Label>Stock</Label><Input value={stockName} onChange={e => setStockName(e.target.value)} /></div>
             <div><Label>Buy Price</Label><Input value={buyPrice} onChange={e => setBuyPrice(e.target.value)} /></div>
@@ -164,12 +169,15 @@ const StockAnalyzer = () => {
                 <div><Label>Interest Rate %</Label><Input value={brokerInterestRate} onChange={e => setBrokerInterestRate(e.target.value)} /></div>
               </>
             )}
+            <Button onClick={calculateAnalysis} className="col-span-2">Analyze</Button>
           </CardContent>
-          <Button onClick={calculateAnalysis}>Analyze</Button>
         </Card>
+
         {result && (
-          <Card className="p-6 bg-white/5 backdrop-blur border border-white/10">
-            <CardHeader><CardTitle>₹ Results for {stockName}</CardTitle></CardHeader>
+          <Card className="shadow-lg">
+            <CardHeader>
+              <CardTitle>Analysis Results for {stockName}</CardTitle>
+            </CardHeader>
             <CardContent className="space-y-2">
               <div>Total Invested: {currency(result.totalInvested)}</div>
               <div>Total Sell: {currency(result.totalSellAmount)}</div>
