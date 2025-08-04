@@ -141,7 +141,7 @@ const StockAnalyzer = () => {
   const percent = (p: number) => `${p.toFixed(2)}%`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-6 text-white">
+    <div className="min-h-screen bg-background p-4 md:p-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <Card className="p-6 bg-white/5 backdrop-blur border border-white/10">
           <CardHeader><CardTitle>Stock Inputs</CardTitle></CardHeader>
