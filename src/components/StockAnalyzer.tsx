@@ -299,10 +299,11 @@ const StockAnalyzer = () => {
           <Card className="shadow-lg">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <DollarSign className="h-5 w-5 text-primary" />
-                Analysis Results for {stockName}
+                <span className="h-5 w-5 text-primary font-bold">₹</span>
+              Analysis Results for {stockName}
               </CardTitle>
             </CardHeader>
+
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Regular Investment Results */}
