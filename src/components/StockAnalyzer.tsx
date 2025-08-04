@@ -91,9 +91,9 @@ const StockAnalyzer = () => {
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
     }).format(amount);
   };
 
@@ -131,7 +131,7 @@ const StockAnalyzer = () => {
                 <Label htmlFor="stockName">Stock Name</Label>
                 <Input
                   id="stockName"
-                  placeholder="e.g., AAPL, GOOGL"
+                  placeholder="e.g., RELIANCE, TCS, INFY, HDFC"
                   value={stockName}
                   onChange={(e) => setStockName(e.target.value)}
                   className={errors.stockName ? "border-destructive" : ""}
@@ -142,12 +142,12 @@ const StockAnalyzer = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="buyPrice">Buy Price ($)</Label>
+                <Label htmlFor="buyPrice">Buy Price (₹)</Label>
                 <Input
                   id="buyPrice"
                   type="number"
                   step="0.01"
-                  placeholder="e.g., 150.00"
+                  placeholder="e.g., 2500.00"
                   value={buyPrice}
                   onChange={(e) => setBuyPrice(e.target.value)}
                   className={errors.buyPrice ? "border-destructive" : ""}
@@ -173,12 +173,12 @@ const StockAnalyzer = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="sellPrice">Desired Sell Price ($)</Label>
+                <Label htmlFor="sellPrice">Desired Sell Price (₹)</Label>
                 <Input
                   id="sellPrice"
                   type="number"
                   step="0.01"
-                  placeholder="e.g., 180.00"
+                  placeholder="e.g., 2800.00"
                   value={sellPrice}
                   onChange={(e) => setSellPrice(e.target.value)}
                   className={errors.sellPrice ? "border-destructive" : ""}
@@ -221,12 +221,12 @@ const StockAnalyzer = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="mtfTargetPrice">Expected Target Price with Margin ($)</Label>
+                    <Label htmlFor="mtfTargetPrice">Expected Target Price with Margin (₹)</Label>
                     <Input
                       id="mtfTargetPrice"
                       type="number"
                       step="0.01"
-                      placeholder="e.g., 200.00"
+                      placeholder="e.g., 3000.00"
                       value={mtfTargetPrice}
                       onChange={(e) => setMtfTargetPrice(e.target.value)}
                       className={errors.mtfTargetPrice ? "border-destructive" : ""}
